@@ -1,0 +1,70 @@
+
+    2  sudo apt update
+    3  sudo apt install docker.io
+    5  curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+    6  sudo dpkg -i minikube_latest_amd64.deb
+   
+   10  sudo chmod 777 /var/run/docker.sock
+   11  minikube start
+   12  sudo snap install kubectl --classic
+   13  kubectl get po -A
+   14  minikube addons enable ingress
+kubectl create deployment nginx --image=nginx --port=80
+
+   15  kubectl expose deploy nginx --type NodePort
+  
+   17  kubectl get svc -A
+   18  nano ingress.yaml
+
+   31  nano ingress.yaml
+   32  kubectl apply -f ingress.yaml
+   33  kubectl port-forward service/ingress-nginx-controller -n ingress-nginx --address 0.0.0.0 :443
+   34  hisotry
+   35  history
+   36  sudo apt-get install apache2
+   37  kubectl get po -A
+   38  clear
+   39  kubectl get svc
+   40  kubectl get svc -A
+   41  history
+   42  kubectl get po -A
+   43  kubectl get po -o wide
+   44  sudo apt remove apache
+   45  sudo apt remove apache2
+   46  kubectl port-forward service/ingress-nginx-controller -n ingress-nginx --address 0.0.0.0 :443
+
+extras
+   47  kubectl port-forward service/apache 8080:80
+   48  kubectl port-forward service/apache :443
+   49  kubectl port-forward service/apache :8080
+   50  kubectl port-forward service/apache :80
+   51  kubectl port-forward service/apache :443
+   52  kubectl port-forward service/apache 0.0.0.0 :443
+   53  kubectl port-forward service/apache 0.0.0.0 :80
+   54  kubectl port-forward service/apache 0.0.0.0 8080 :80
+   55  kubectl port-forward service/apache --address 0.0.0.0 :80
+
+
+
+
+
+
+apiVersion: networking.k8s.io/v1                                                                                                                              
+kind: Ingress                                                                                                                                                 
+metadata:                                                                                                                                                     
+ name: ingress                                                                                                                                               
+ annotations:                                                                                                                                                
+   nginx.ingress.kubernetes.io/rewrite-target: /                                                                                                             
+spec:      
+ ingressClassName: nginx  
+ rules:                                                                                                                                                      
+  - http:                                                                                                                                                     
+     paths:                                                                                                                                                  
+     - path: /nginx                                                                                                                                          
+       pathType: Prefix                                                                                                                                      
+       backend:                                                                                                                                              
+         service:                                                                                                                                            
+           name: nginx                                                                                                                                       
+           port:                                                                                                                                             
+             number: 80
+
